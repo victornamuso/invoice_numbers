@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name             = 'invoice_numbers'
-  s.version          = '0.1.2'
+  s.version          = '0.1.3'
 
   s.authors          = [ 'Rob Scheepmaker' ]
   s.email            = 'rob@rscheepmaker.nl'
@@ -8,7 +8,10 @@ Gem::Specification.new do |s|
   s.description      = 'Create sequences of uninterrupted invoice numbers'
   s.summary          = 'Create sequences of uninterrupted invoice numbers'
   s.extra_rdoc_files = [ 'README.rdoc' ]
-  s.files            = FileList['lib/**/*.rb', 'test/**/*'].to_a
+
+  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+    f.match(%r{^(test|spec|features)/})
+  end
   s.rdoc_options     = ['--main', 'README.rdoc']
   s.require_paths    = ['lib']
   s.test_files       = FileList['test/*.rb'].to_a
