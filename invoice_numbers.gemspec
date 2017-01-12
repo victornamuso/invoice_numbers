@@ -14,7 +14,6 @@ Gem::Specification.new do |s|
   end
   s.rdoc_options     = ['--main', 'README.rdoc']
   s.require_paths    = ['lib']
-  s.test_files       = FileList['test/*.rb'].to_a
   s.add_development_dependency 'activerecord', ['>= 0']
   s.add_development_dependency 'mongoid', ['>= 0']
   s.add_development_dependency 'database_cleaner', ['>= 0']
