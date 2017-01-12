@@ -1,4 +1,4 @@
-require 'rake'
+# require 'rake'
 
 Gem::Specification.new do |s|
   s.name             = 'invoice_numbers'
