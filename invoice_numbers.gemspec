@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.summary          = 'Create sequences of uninterrupted invoice numbers'
   s.extra_rdoc_files = [ 'README.rdoc' ]
 
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+  s.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
   s.rdoc_options     = ['--main', 'README.rdoc']
