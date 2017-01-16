@@ -11,6 +11,7 @@ module InvoiceNumbers
         invoice_number_sequence    ||= self.name.to_s.underscore
         invoice_number_assign_if     = options[:assign_if]
         invoice_number_prefix        = options[:prefix]
+	invoice_number_scope         = options[:invoice_number_scope]
 
         if invoice_number_assign_if
           before_save :"assign_#{invoice_number_field}"
@@ -25,6 +26,8 @@ module InvoiceNumbers
             if read_attribute( invoice_number_field ).blank? 
               if invoice_number_assign_if.nil? or invoice_number_assign_if.call(self)
                 sequence = invoice_number_sequence.respond_to?(:call) ? invoice_number_sequence.call(self) : invoice_number_sequence
+		scope =  read_attribute(invoice_number_scope) if invoice_number_scope
+		sequence = scope if scope
                 write_attribute( invoice_number_field, "#{invoice_number_prefix || '' }#{Generator.next_invoice_number( sequence )}" )
               end
             end
