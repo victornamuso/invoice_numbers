@@ -23,10 +23,10 @@ module InvoiceNumbers
 
         send(:define_method, "assign_#{invoice_number_field}") do
           do_assign = Proc.new do
-            if read_attribute( invoice_number_field ).blank? 
+	    scope =  read_attribute(invoice_number_scope) if invoice_number_scope
+            if read_attribute( invoice_number_field ).blank? || (scope && read_attribute("#{invoice_number_scope}_changed?"))
               if invoice_number_assign_if.nil? or invoice_number_assign_if.call(self)
                 sequence = invoice_number_sequence.respond_to?(:call) ? invoice_number_sequence.call(self) : invoice_number_sequence
-		scope =  read_attribute(invoice_number_scope) if invoice_number_scope
 		return if scope.nil? && invoice_number_scope
 		sequence = scope if scope
                 write_attribute( invoice_number_field, "#{invoice_number_prefix || '' }#{Generator.next_invoice_number( sequence )}" )

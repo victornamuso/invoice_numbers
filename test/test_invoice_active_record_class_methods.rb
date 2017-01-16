@@ -16,11 +16,14 @@ if ENV['orm'] == 'activerecord'
       t.boolean :finished,    :default => false
       t.string :invoice_nr
     end
-    create_table :invoices, :force => true do |t|
-      t.boolean :finished,    :default => false
-      t.string :invoice_nr
-      t.string  :customer
-     end
+    [:invoices,:scoped_invoices].each do |table|
+      create_table table, :force => true do |t|
+	t.boolean :finished,    :default => false
+	t.string :invoice_nr
+	t.string  :customer
+	t.integer :vendor_id
+      end
+    end
   end
 
   class Order < ActiveRecord::Base
@@ -35,6 +38,12 @@ if ENV['orm'] == 'activerecord'
   class Invoice < ActiveRecord::Base
     has_invoice_number :invoice_nr, :invoice_number_sequence => lambda { |invoice| "#{invoice.customer}" }, :prefix => true
   end
+
+
+  class ScopedInvoice < ActiveRecord::Base
+    has_invoice_number :invoice_nr, :invoice_number_sequence => lambda { |invoice| "#{invoice.customer}" }, :prefix => true, invoice_number_scope: :vendor_id
+  end
+
 
 elsif ENV['orm'] == 'mongoid'
 
